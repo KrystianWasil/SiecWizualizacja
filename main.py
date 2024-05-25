@@ -21,35 +21,33 @@ class Neuron:
         return self._f(xs @ self.ws + self.b)
 
 
+#lsita perceptronow to ebdzize 2d, bo dodamy warswy
+perceptrons = []
 
-#neuron z 3 wejsciami
-perceptron = Neuron(n_inputs=3, bias=-0.1, weights=[0.7, 0.6, 1.4])
+#ilsoc neuronow w warsiwe
+neurons_in_layers = [3, 4, 4, 1]
 
-# wektor wejsciowy i obliczenie wyjscia
-output = perceptron([0.5, 0.3, 0.2])
+#dodanie perceptronow do listy wagi same sie tworza w  kalsie neuron
+for num_neurons in neurons_in_layers:
+    layer = []
+    for _ in range(num_neurons):
+        if len(perceptrons) == 0:
+            #peirwszwe nie maja wejsc
+            perceptron = Neuron(n_inputs=0)
+        else:
+            # Tworzenie perceptronów z wejściami będącymi wyjściami z perceptronów poprzedniej warstwy
+            inputs_to_perceptron = len(perceptrons[-1])
+            perceptron = Neuron(n_inputs=inputs_to_perceptron)
+        layer.append(perceptron)
+    perceptrons.append(layer)
 
-# Print the details of the perceptron and the output
-print("Perceptron:")
-print(f"  Weights: {perceptron.ws}")
-print(f"  Bias: {perceptron.b}")
-print(f"  Input vector: {[0.5, 0.3, 0.2]}")
-print(f"  Output: {output}")
+
+
 
 
 #do wizualizacji uzywam grafow z pythona : https://miroslawmamczur.pl/018-diagram-sieci-network-graph/ oraz https://stackoverflow.com/questions/20133479/how-to-draw-directed-graphs-using-networkx-in-python i innych
 #klasa ta wizualizauje wylacznie siec neuronow - nie ma tu zadnych obliczen,
 #oraz obrazek bedzie zawsze taki sam jak z zadania
-
-def Network_visualize():
-    G = nx.DiGraph()
-    G.add_nodes_from(["Input_1", "Input_2", "Input_3"], layer=0)
-    G.add_nodes_from(["Hidden1_1", "Hidden1_2", "Hidden1_3", "Hidden1_4"], layer=1)
-    G.add_nodes_from(["Hidden2_1", "Hidden2_2", "Hidden2_3", "Hidden2_4"], layer=2)
-    G.add_nodes_from(["Output"], layer=3)
-    nx.draw(G)
-    plt.show()
-
-Network_visualize()
 
 
 
