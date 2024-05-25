@@ -21,6 +21,7 @@ class Neuron:
         return self._f(xs @ self.ws + self.b)
 
 
+
 #lsita perceptronow to ebdzize 2d, bo dodamy warswy
 perceptrons = []
 
@@ -41,13 +42,22 @@ for num_neurons in neurons_in_layers:
         layer.append(perceptron)
     perceptrons.append(layer)
 
-
+#test
+# output = perceptrons[1][1]([0.5, 1.5, 2.5])
+# print(output)
 
 
 
 #do wizualizacji uzywam grafow z pythona : https://miroslawmamczur.pl/018-diagram-sieci-network-graph/ oraz https://stackoverflow.com/questions/20133479/how-to-draw-directed-graphs-using-networkx-in-python i innych
 #klasa ta wizualizauje wylacznie siec neuronow - nie ma tu zadnych obliczen,
 #oraz obrazek bedzie zawsze taki sam jak z zadania
+
+# def Net_visualisation():
+#     G = nx.DiGraph()
+#
+#     for i, layer in enumerate(perceptrons):
+#         for j, perceptron in enumerate(layer):
+#             name = f"Layer {i+1} Neuron {j+1}: {perceptron}"
 
 
 
