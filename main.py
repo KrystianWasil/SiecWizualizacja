@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -52,12 +51,33 @@ for num_neurons in neurons_in_layers:
 #klasa ta wizualizauje wylacznie siec neuronow - nie ma tu zadnych obliczen,
 #oraz obrazek bedzie zawsze taki sam jak z zadania
 
-# def Net_visualisation():
-#     G = nx.DiGraph()
-#
-#     for i, layer in enumerate(perceptrons):
-#         for j, perceptron in enumerate(layer):
-#             name = f"Layer {i+1} Neuron {j+1}: {perceptron}"
+def Net_visualisation(perceptrons):
+    G = nx.DiGraph()
+
+    for i, layer in enumerate(perceptrons):
+        for j, perceptron in enumerate(layer):
+            name = f"Layer {i} Neuron {j}"
+            G.add_node(name, layer=i)
+
+    # Dodanie krawędzi między neuronami w kolejnych warstwach
+    for i in range(len(perceptrons) - 1):
+        current_layer = perceptrons[i]
+        next_layer = perceptrons[i + 1]
+        for j, current_perceptron in enumerate(current_layer):
+            for k, next_perceptron in enumerate(next_layer):
+                current_node_name = f"Layer {i} Neuron {j}"
+                next_node_name = f"Layer {i + 1} Neuron {k}"
+                G.add_edge(current_node_name, next_node_name)
+
+    # Rysowanie grafu
+    pos = nx.multipartite_layout(G, subset_key="layer")
+    nx.draw(G, pos, with_labels=True, node_size=1000, node_color="green", font_size=8, font_weight="bold",
+            arrowsize=20)
+    plt.title("Visualizing Neural Network")
+    plt.show()
+
+Net_visualisation(perceptrons)
+
 
 
 
