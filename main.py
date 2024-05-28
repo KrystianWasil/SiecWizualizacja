@@ -35,7 +35,7 @@ for num_neurons in neurons_in_layers:
             #peirwszwe nie maja wejsc
             perceptron = Neuron(n_inputs=0)
         else:
-            # Tworzenie perceptronów z wejściami będącymi wyjściami z perceptronów poprzedniej warstwy
+            # tworzenie perceptronów z wejściami będącymi wyjściami z perceptronów poprzedniej warstwy
             inputs_to_perceptron = len(perceptrons[-1])
             perceptron = Neuron(n_inputs=inputs_to_perceptron)
         layer.append(perceptron)
@@ -59,7 +59,7 @@ def Net_visualisation(perceptrons):
             name = f"Layer {i} Neuron {j}"
             G.add_node(name, layer=i)
 
-    # Dodanie krawędzi między neuronami w kolejnych warstwach
+    # dodaje krawdzie do nowych warstw
     for i in range(len(perceptrons) - 1):
         current_layer = perceptrons[i]
         next_layer = perceptrons[i + 1]
@@ -67,12 +67,15 @@ def Net_visualisation(perceptrons):
             for k, next_perceptron in enumerate(next_layer):
                 current_node_name = f"Layer {i} Neuron {j}"
                 next_node_name = f"Layer {i + 1} Neuron {k}"
-                G.add_edge(current_node_name, next_node_name)
+                weight = next_perceptron.ws[j]
+                G.add_edge(current_node_name, next_node_name, weight=weight)
 
-    # Rysowanie grafu
-    pos = nx.multipartite_layout(G, subset_key="layer")
+    # rysuje graf
+    pos = nx.multipartite_layout(G, subset_key="layer",scale=3)
+    edge_labels = {(u, v): f"{d['weight']:.2f}" for u, v, d in G.edges(data=True)}
     nx.draw(G, pos, with_labels=True, node_size=1000, node_color="green", font_size=8, font_weight="bold",
             arrowsize=20)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red', font_size=8, label_pos=0.3)
     plt.title("Visualizing Neural Network")
     plt.show()
 
