@@ -37,7 +37,7 @@ for num_neurons in neurons_in_layers:
         else:
             # tworzenie perceptronów z wejściami będącymi wyjściami z perceptronów poprzedniej warstwy
             inputs_to_perceptron = len(perceptrons[-1])
-            perceptron = Neuron(n_inputs=inputs_to_perceptron)
+            perceptron = Neuron(n_inputs=inputs_to_perceptron,bias=0.5)
         layer.append(perceptron)
     perceptrons.append(layer)
 
